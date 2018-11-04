@@ -12,7 +12,7 @@ public class AccountProvider extends ContentProvider {
 
     //1.定义一个UriMather   定义一个路径匹配器
     private static final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
-    private static final int QUERYSUCESS = 1;
+    private static final int QUERYSUCESS = 0;
     private MyOpenHelper myOpenHelper;
 
     //2.定义静态代码块 添加匹配规则
@@ -21,7 +21,7 @@ public class AccountProvider extends ContentProvider {
          * authority:这个参数和清单文件里面定义的要一致
          * path:
          */
-        matcher.addURI("com.ayuan.database.AccountProvider", "query", QUERYSUCESS);
+        matcher.addURI("com.ayuan.provider", "/query", QUERYSUCESS);
     }
 
     //首先调用此方法

@@ -20,11 +20,7 @@
         <!--配置内容提供者-->
         <provider
             android:name=".AccountProvider"
-            android:authorities="com.ayuan.database.AccountProvider" />
-        <provider
-            android:name=".AccountProvider"
-            android:authorities="com.ayuan.provider"
-            android:exported="true" />
+            android:authorities="com.ayuan.provider" />
     </application>
 
 </manifest>
