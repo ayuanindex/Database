@@ -12,8 +12,8 @@ public class AccountProvider extends ContentProvider {
 
     //1.定义一个UriMather   定义一个路径匹配器
     private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-    private static final int QUERYSUCESS = 0;
-    private MyOpenHelper myOpenHelper;
+    private static final int QUERYSUCESS = 1;
+    private static MyOpenHelper myOpenHelper;
 
     //2.定义静态代码块 添加匹配规则
     static {
@@ -45,7 +45,7 @@ public class AccountProvider extends ContentProvider {
         Log.i("AccountProvider", "提供成功");
         int code = sURIMatcher.match(uri);//返回一个匹配码
         if (code == QUERYSUCESS) {
-            //说明路径匹配成功则实现query方法    数据库的查询方法 对数据库进行查询操作 想操作数据库必须获得Sqlitedatabase对象
+            //说明路径匹配成功则实现query方法    数据库的查询方法 对数据库进行查询操作 想操作数据库必须获得Sqlitedatabase对象android.database.sqlite.SQLiteDatabase
             SQLiteDatabase readableDatabase = myOpenHelper.getReadableDatabase();
             Cursor info = readableDatabase.query("info", projection, selection, selectionArgs, null, null, sortOrder);
             //Cursor不能关闭
