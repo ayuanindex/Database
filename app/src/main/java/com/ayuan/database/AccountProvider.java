@@ -15,13 +15,13 @@ public class AccountProvider extends ContentProvider {
     private static final int QUERYSUCESS = 1;
     private MyOpenHelper myOpenHelper;
 
-    //2.定义静态代码块 添加匹配规则 
+    //2.定义静态代码块 添加匹配规则
     static {
         /**
          * authority:这个参数和清单文件里面定义的要一致
          * path:
          */
-        matcher.addURI("com.ayuan.provider", "query", QUERYSUCESS);
+        matcher.addURI("com.ayuan.database.AccountProvider", "query", QUERYSUCESS);
     }
 
     //首先调用此方法
@@ -41,13 +41,14 @@ public class AccountProvider extends ContentProvider {
      */
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        Log.i("AccountProvider", "提供成功");
+
         int code = matcher.match(uri);//返回一个匹配码
         if (code == QUERYSUCESS) {
             //说明路径匹配成功则实现query方法    数据库的查询方法 对数据库进行查询操作 想操作数据库必须获得Sqlitedatabase对象android.database.sqlite.SQLiteDatabase
             SQLiteDatabase readableDatabase = myOpenHelper.getReadableDatabase();
             Cursor info = readableDatabase.query("info", projection, selection, selectionArgs, null, null, sortOrder);
             //Cursor不能关闭
+            Log.i("AccountProvider", "提供成功");
             return info;
         } else {
             //说明路径不匹配 抛出参数异常
