@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         MyOpenHelper myOpenHelper = new MyOpenHelper(this, "Account.db", null, 1);
+        //第一次执行时创建数据库，第二次执行是打开数据库
         SQLiteDatabase readableDatabase = myOpenHelper.getReadableDatabase();
         Cursor cursor = readableDatabase.rawQuery("select * from info", null);
         if (cursor != null && cursor.getCount() > 0) {
