@@ -21,7 +21,7 @@ public class AccountProvider extends ContentProvider {
          * authority:这个参数和清单文件里面定义的要一致
          * path:
          */
-        matcher.addURI("com.ayuan.provider", "/query", QUERYSUCESS);
+        matcher.addURI("com.ayuan.provider", "query", QUERYSUCESS);
     }
 
     //首先调用此方法
@@ -48,10 +48,10 @@ public class AccountProvider extends ContentProvider {
             SQLiteDatabase readableDatabase = myOpenHelper.getReadableDatabase();
             Cursor info = readableDatabase.query("info", projection, selection, selectionArgs, null, null, sortOrder);
             //Cursor不能关闭
-            Log.i("AccountProvider", "提供成功");
             return info;
         } else {
             //说明路径不匹配 抛出参数异常
+            Log.i("AccountProvider", "提供成功");
             throw new IllegalArgumentException("哥们：你的路径不匹配，请检查路径");
             //也可以返回一个null
         }
