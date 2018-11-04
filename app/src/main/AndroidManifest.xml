@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--配置内容提供者-->
+        <provider
+            android:name=".AccountProvider"
+            android:authorities="com.ayuan.provider" />
     </application>
 
 </manifest>
