@@ -11,9 +11,9 @@ import android.util.Log;
 public class AccountProvider extends ContentProvider {
 
     //1.定义一个UriMather   定义一个路径匹配器
-    private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+    private static final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
     private static final int QUERYSUCESS = 1;
-    private static MyOpenHelper myOpenHelper;
+    private MyOpenHelper myOpenHelper;
 
     //2.定义静态代码块 添加匹配规则
     static {
@@ -21,7 +21,7 @@ public class AccountProvider extends ContentProvider {
          * authority:这个参数和清单文件里面定义的要一致
          * path:
          */
-        sURIMatcher.addURI("com.ayuan.provider", "query", QUERYSUCESS);
+        matcher.addURI("com.ayuan.provider", "query", QUERYSUCESS);
     }
 
 
@@ -31,6 +31,7 @@ public class AccountProvider extends ContentProvider {
         myOpenHelper = new MyOpenHelper(getContext(), "Account.db", null, 1);
         return false;
     }
+
 
     /**
      * @param uri
@@ -43,7 +44,7 @@ public class AccountProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         Log.i("AccountProvider", "提供成功");
-        int code = sURIMatcher.match(uri);//返回一个匹配码
+        int code = matcher.match(uri);//返回一个匹配码
         if (code == QUERYSUCESS) {
             //说明路径匹配成功则实现query方法    数据库的查询方法 对数据库进行查询操作 想操作数据库必须获得Sqlitedatabase对象android.database.sqlite.SQLiteDatabase
             SQLiteDatabase readableDatabase = myOpenHelper.getReadableDatabase();
@@ -56,7 +57,6 @@ public class AccountProvider extends ContentProvider {
             //也可以返回一个null
         }
     }
-
 
     @Override
     public String getType(Uri uri) {
