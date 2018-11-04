@@ -15,7 +15,7 @@ public class AccountProvider extends ContentProvider {
     private static final int QUERYSUCESS = 1;
     private MyOpenHelper myOpenHelper;
 
-    //2.定义静态代码块 添加匹配规则
+    //2.定义静态代码块 添加匹配规则 
     static {
         /**
          * authority:这个参数和清单文件里面定义的要一致
