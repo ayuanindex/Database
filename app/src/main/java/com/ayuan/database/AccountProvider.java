@@ -24,14 +24,12 @@ public class AccountProvider extends ContentProvider {
         matcher.addURI("com.ayuan.provider", "query", QUERYSUCESS);
     }
 
-
     //首先调用此方法
     @Override
     public boolean onCreate() {
         myOpenHelper = new MyOpenHelper(getContext(), "Account.db", null, 1);
         return false;
     }
-
 
     /**
      * @param uri
@@ -62,7 +60,6 @@ public class AccountProvider extends ContentProvider {
     public String getType(Uri uri) {
         return null;
     }
-
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
