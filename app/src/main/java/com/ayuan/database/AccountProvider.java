@@ -13,6 +13,9 @@ public class AccountProvider extends ContentProvider {
     //1.定义一个UriMather   定义一个路径匹配器
     private static final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
     private static final int QUERYSUCESS = 0;
+    private static final int INSERTSUCESS = 1;
+    private static final int DELETESUCESS = 2;
+    private static final int UPDATESUCESS = 3;
     private MyOpenHelper myOpenHelper;
 
     //2.定义静态代码块 添加匹配规则
@@ -22,6 +25,9 @@ public class AccountProvider extends ContentProvider {
          * path:
          */
         matcher.addURI("com.ayuan.provider", "query", QUERYSUCESS);
+        matcher.addURI("com.ayuan.provider", "insert", INSERTSUCESS);
+        matcher.addURI("com.ayuan.provider", "delete", DELETESUCESS);
+        matcher.addURI("com.ayuan.provider", "update", UPDATESUCESS);
     }
 
     //首先调用此方法
@@ -64,16 +70,40 @@ public class AccountProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
+        int code = matcher.match(uri);
+        if (code == INSERTSUCESS) {
+            //操作数据库 说明路径匹配成功   对数据库进行添加的操作
+            SQLiteDatabase readableDatabase = myOpenHelper.getReadableDatabase();
+            //返回值代表新插入行的id
+            long info = readableDatabase.insert("info", null, values);
+            Uri parse = Uri.parse("com.ayuan.accountprovider_insert/" + info);
+            return parse;
+        }
         return null;
     }
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
+        int code = matcher.match(uri);
+        if (code == DELETESUCESS) {
+            //说明路径匹配成功-------->对数据库进行删除的操作
+            SQLiteDatabase readableDatabase = myOpenHelper.getReadableDatabase();
+            //返回值为删除所影响的行数
+            int info = readableDatabase.delete("info", selection, selectionArgs);
+            return info;
+        }
         return 0;
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        int code = matcher.match(uri);
+        if (code == UPDATESUCESS) {
+            SQLiteDatabase readableDatabase = myOpenHelper.getReadableDatabase();
+            //这里是更新所影响的行数
+            int info = readableDatabase.update("info", values, selection, selectionArgs);
+            return info;
+        }
         return 0;
     }
 }
